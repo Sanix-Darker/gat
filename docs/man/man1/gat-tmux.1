@@ -1,0 +1,77 @@
+.TH GAT-TMUX 1 "2026-06-04" "gat 0.3.0" "gat Manual"
+.SH NAME
+gat-tmux \- create a worktree and open an AI-ready tmux session
+.SH SYNOPSIS
+.B gat tmux
+.I <ticket>
+.RI [ options ]
+.br
+.B gat session
+.I <ticket>
+.RI [ options ]
+.br
+.B gat start
+.I <ticket>
+.RI [ options ]
+.SH DESCRIPTION
+Creates the worktree if needed (like
+.BR gat\-new (1)),
+then creates a three-pane tmux session: the AI command (default
+.IR codex )
+on the left, the editor (default
+.IR nvim )
+on the worktree root in the right-top pane, and a shell in the right-bottom
+pane. Pane proportions come from the active layout. If gat is already inside
+tmux, it switches the client rather than nesting. The session name folds in the
+worktree description and gat records
+.IR @gat_path ", " @gat_branch ", and " @gat_description
+on the session.
+.PP
+A prompt draft file is created outside the repository under
+.I ${XDG_CONFIG_HOME:-~/.config}/gat/worktrees/<repo-key>/<ticket>/pre-prompt.md
+and exported to panes as
+.IR GAT_PROMPT_FILE .
+.SH OPTIONS
+.TP
+.BI \-\-session " name"
+Override the tmux session name.
+.TP
+.BI \-\-prompt\-file " path"
+Override the prompt draft path.
+.TP
+.BI \-\-codex\-cmd " cmd"
+Command for the AI pane (default
+.IR codex ).
+.TP
+.BI \-\-editor\-cmd " cmd"
+Editor for the prompt pane (default
+.IR nvim ).
+.TP
+.BI \-\-layout " preset"
+Layout preset:
+.IR classic ", " ai\-focus ", " editor\-focus ", " wide .
+.TP
+.B \-\-no\-attach
+Create/reuse without attaching.
+.TP
+.BR \-n ", " \-\-dry\-run
+Print the tmux plan only (does not create the worktree).
+.TP
+.BI \-\-prefix " prefix" ", " \-\-no\-prefix
+Ticket prefix handling.
+.TP
+.BI \-\-format " text|json|shell"
+Output format.
+.SH EXAMPLES
+.RS
+.EX
+gat tmux 12345
+gat tmux 12345 \-\-layout ai\-focus
+gat tmux 12345 \-\-codex\-cmd "aider" \-\-editor\-cmd "code \-w"
+gat tmux 12345 \-\-dry\-run \-\-format json
+.EE
+.RE
+.SH "SEE ALSO"
+.BR gat (1),
+.BR gat\-switch (1),
+.BR gat\-sessions (1)

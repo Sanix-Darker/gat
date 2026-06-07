@@ -1,0 +1,97 @@
+.TH GAT-CONFIG 1 "2026-06-04" "gat 0.3.0" "gat Manual"
+.SH NAME
+gat-config \- inspect or edit the gat configuration
+.SH SYNOPSIS
+.B gat config init
+.RB [ \-\-force ]
+.br
+.B gat config path
+.br
+.B gat config list
+.RB [ \-\-format
+.IR text|json ]
+.br
+.B gat config get
+.I <key>
+.br
+.B gat config set
+.I <key> <value...>
+.SH DESCRIPTION
+Manages the config file at
+.IR ${XDG_CONFIG_HOME:-~/.config}/gat/config.toml .
+.TP
+.B init
+Write a default config file; refuses to overwrite without
+.BR \-\-force .
+.TP
+.B path
+Print the config file path.
+.TP
+.B list
+Show every recognized key with its effective value after the file, Git config,
+and environment layers are merged.
+.TP
+.B get <key>
+Print one key's effective value; exits non-zero if unset.
+.TP
+.B set <key> <value>
+Write a key to the config file only (never capturing a Git/env override) and
+validate the value.
+.SH "RECOGNIZED KEYS"
+.TP
+.B ticket_prefix
+String; an empty value clears it.
+.TP
+.BR docker_compose_dir ", " docker_worktree_mount ", " docker_service
+Strings.
+.TP
+.B verbose
+Boolean
+.RI ( true/false/1/0/yes/no/on/off ).
+.TP
+.B tmux.layout
+Preset (write-only sugar that sets the geometry keys):
+.IR classic ", " ai\-focus ", " editor\-focus ", " wide .
+.TP
+.BR tmux.left_width ", " tmux.bottom_height
+Percent (0-100).
+.TP
+.BR tmux.shell ", " tmux.codex_cmd ", " tmux.editor_cmd
+Strings.
+.TP
+.B tmux.focus_left
+Boolean.
+.SH "GIT CONFIG KEYS"
+Equivalent read-only overlay keys, set with
+.BR git\-config (1):
+.IR gat.ticketPrefix ", " gat.dockerComposeDir ", " gat.dockerWorktreeMount ", "
+.IR gat.dockerService ", " gat.tmuxLayout ", " gat.tmuxShell ", " gat.tmuxCodexCmd ", "
+.IR gat.tmuxEditorCmd ", " gat.tmuxLeftWidth ", " gat.tmuxBottomHeight .
+.SH TEMPLATES
+Worktree templates are
+.RI [ template . <name> ]
+sections with
+.IR copy ", " symlink ", and " run
+list keys, applied by
+.BR gat\-new (1).
+.SH OPTIONS
+.TP
+.BR \-f ", " \-\-force
+(init) Overwrite an existing config file.
+.TP
+.BI \-\-format " text|json"
+(list) Output format.
+.SH EXAMPLES
+.RS
+.EX
+gat config init
+gat config set ticket_prefix ABC
+gat config set tmux.layout ai\-focus
+gat config get tmux.left_width
+gat config list \-\-json
+.EE
+.RE
+.SH "SEE ALSO"
+.BR gat (1),
+.BR gat\-new (1),
+.BR gat\-tmux (1)

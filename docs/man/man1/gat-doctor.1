@@ -1,0 +1,33 @@
+.TH GAT-DOCTOR 1 "2026-06-04" "gat 0.3.0" "gat Manual"
+.SH NAME
+gat-doctor \- inspect local setup, dependencies, and stale worktrees
+.SH SYNOPSIS
+.B gat doctor
+.RB [ \-\-format
+.IR text|json ]
+.SH DESCRIPTION
+Reports the Git version, repository roots, ticket prefix, whether shell
+integration is active, and the availability of
+.BR docker (1),
+.BR tmux (1),
+.IR codex ,
+.BR nvim (1),
+and
+.BR fzf (1).
+It also warns about worktrees not accessed in over 30 days and prunes orphaned
+metadata entries as a side effect.
+.SH OPTIONS
+.TP
+.BI \-\-format " text|json"
+Output format.
+.SH EXAMPLES
+.RS
+.EX
+gat doctor
+gat doctor \-\-json
+.EE
+.RE
+.SH "SEE ALSO"
+.BR gat (1),
+.BR gat\-prune (1),
+.BR gat\-shell\-init (1)

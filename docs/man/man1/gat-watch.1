@@ -1,0 +1,41 @@
+.TH GAT-WATCH 1 "2026-06-04" "gat 0.3.0" "gat Manual"
+.SH NAME
+gat-watch \- continuously render the worktree list
+.SH SYNOPSIS
+.B gat watch
+.RB [ \-\-interval
+.IR ms ]
+.RB [ \-\-once ]
+.RB [ \-\-full ]
+.RB [ \-\-fast ]
+.SH DESCRIPTION
+Clears the screen and redraws the
+.BR gat\-list (1)
+table on an interval. Defaults to fast mode (skipping expensive checks) so it
+stays responsive with many worktrees. Ctrl+C restores the cursor and exits
+cleanly.
+.SH OPTIONS
+.TP
+.BI \-\-interval " ms"
+Refresh interval in milliseconds (default 1000, minimum 100).
+.TP
+.B \-\-once
+Render once and exit (useful for tests and scripts).
+.TP
+.B \-\-full
+Include dirty/merged/change-stat checks.
+.TP
+.B \-\-fast
+Skip expensive checks (default).
+.SH EXAMPLES
+.RS
+.EX
+gat watch
+gat watch \-\-interval 2000 \-\-full
+gat watch \-\-once
+.EE
+.RE
+.SH "SEE ALSO"
+.BR gat (1),
+.BR gat\-list (1),
+.BR gat\-ui (1)

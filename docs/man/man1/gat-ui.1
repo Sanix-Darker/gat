@@ -1,0 +1,67 @@
+.TH GAT-UI 1 "2026-06-04" "gat 0.3.0" "gat Manual"
+.SH NAME
+gat-ui \- interactive TUI dashboard
+.SH SYNOPSIS
+.B gat ui
+.RB [ \-\-fast ]
+.br
+.B gat dashboard
+.RB [ \-\-fast ]
+.SH DESCRIPTION
+Opens a keyboard-driven dashboard, designed to run inside a tmux pane, with two
+tabs (Worktrees and Sessions) showing change stats, idle time, and
+descriptions. From the dashboard you can navigate, filter, switch to a session,
+edit a description, and remove a worktree.
+.PP
+The TUI is gated behind the optional
+.I tui
+Cargo feature so the standard build stays lean. Build or install it with
+.RB ` "cargo install \-\-path . \-\-features tui" `.
+Without the feature,
+.B gat ui
+prints a message explaining how to enable it.
+.SH "KEY BINDINGS"
+.TP
+.BR j " / " k ", arrows"
+Move the selection.
+.TP
+.B Tab
+Toggle the Worktrees and Sessions list.
+.TP
+.B Enter
+Switch to (or open) the selected worktree's session.
+.TP
+.B d
+Describe the selected worktree.
+.TP
+.B x
+Remove the selected worktree (asks
+.IR y/N ).
+.TP
+.B /
+Incremental filter
+.RB ( Enter
+commits,
+.B Esc
+cancels).
+.TP
+.B r
+Refresh the snapshot.
+.TP
+.BR q " / " Esc
+Quit.
+.SH OPTIONS
+.TP
+.B \-\-fast
+Skip dirty/merged/change-stat checks for instant startup.
+.SH EXAMPLES
+.RS
+.EX
+gat ui
+gat ui \-\-fast
+.EE
+.RE
+.SH "SEE ALSO"
+.BR gat (1),
+.BR gat\-list (1),
+.BR gat\-sessions (1)

@@ -1,0 +1,52 @@
+.TH GAT-DX 1 "2026-06-04" "gat 0.3.0" "gat Manual"
+.SH NAME
+gat-dx \- enter or run a worktree-scoped Docker container
+.SH SYNOPSIS
+.B gat dx
+.RB [ \-\-service
+.IR name ]
+.RB [ \-\-doctor ]
+.RB [ \-\- ]
+.RI [ command ...]
+.br
+.B gat docker
+.RI [ ... ]
+.SH DESCRIPTION
+Finds a running container whose bind mount source matches the current worktree
+root and
+.B exec
+s into it; if none is running, falls back to
+.B docker compose run \-\-rm <service>
+from the worktree's compose directory. With no command, runs
+.BR bash .
+Service selection uses
+.BR \-\-service ,
+then
+.IR GAT_DOCKER_SERVICE ,
+then
+.IR gat.dockerService ,
+then the
+.I dp1
+default, then the only runnable declared service.
+.SH OPTIONS
+.TP
+.BI \-\-service " name"
+Compose service to exec into or run.
+.TP
+.B \-\-doctor
+Print Docker/worktree diagnostics instead of running a command.
+.TP
+.B \-\-
+Treat everything after as the command to run.
+.SH EXAMPLES
+.RS
+.EX
+gat dx
+gat dx \-\- npm test
+gat dx \-\-service web \-\- bash
+gat dx \-\-doctor
+.EE
+.RE
+.SH "SEE ALSO"
+.BR gat (1),
+.BR gat\-config (1)

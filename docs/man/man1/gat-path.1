@@ -1,0 +1,30 @@
+.TH GAT-PATH 1 "2026-06-04" "gat 0.3.0" "gat Manual"
+.SH NAME
+gat-path \- print only the path to a worktree
+.SH SYNOPSIS
+.B gat path
+.I <ticket|^|@>
+.RI [ options ]
+.SH DESCRIPTION
+Resolves a worktree the same way
+.BR gat\-go (1)
+does, but always prints just the path to standard output and never changes
+directory. Useful in scripts and command substitution.
+.SH OPTIONS
+.TP
+.BI \-\-prefix " prefix"
+Prefix for numeric ticket targets.
+.TP
+.B \-\-no\-prefix
+Do not prefix a numeric target.
+.SH EXAMPLES
+.RS
+.EX
+gat path 12345
+cd "$(gat path 12345)"
+code "$(gat path ^)"
+.EE
+.RE
+.SH "SEE ALSO"
+.BR gat (1),
+.BR gat\-go (1)

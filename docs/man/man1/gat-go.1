@@ -1,0 +1,44 @@
+.TH GAT-GO 1 "2026-06-04" "gat 0.3.0" "gat Manual"
+.SH NAME
+gat-go \- print or switch to an existing worktree
+.SH SYNOPSIS
+.B gat go
+.I <ticket|^|@>
+.RI [ options ]
+.SH DESCRIPTION
+Looks up a worktree by branch name, path basename, full path, or a shortcut
+.RI ( ^
+for the default branch's worktree,
+.I @
+for the current worktree), records an access timestamp, and reports the path.
+With shell integration active it changes the current directory; otherwise it
+prints the path. Unlike
+.BR gat\-new (1),
+it does not create a worktree unless
+.B \-\-create
+is given.
+.SH OPTIONS
+.TP
+.BR \-c ", " \-\-create
+Create the worktree if it does not exist.
+.TP
+.BI \-\-prefix " prefix"
+Prefix for numeric ticket targets.
+.TP
+.B \-\-no\-prefix
+Do not prefix a numeric target.
+.TP
+.BI \-\-format " text|json|shell"
+Output format.
+.SH EXAMPLES
+.RS
+.EX
+gat go 12345
+gat go ^
+gat go 12345 \-\-create
+.EE
+.RE
+.SH "SEE ALSO"
+.BR gat (1),
+.BR gat\-path (1),
+.BR gat\-switch (1)

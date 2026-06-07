@@ -1,0 +1,59 @@
+.TH GAT-RM 1 "2026-06-04" "gat 0.3.0" "gat Manual"
+.SH NAME
+gat-rm \- remove a linked worktree
+.SH SYNOPSIS
+.B gat rm
+.I <ticket>
+.RI [ options ]
+.br
+.B gat remove
+.I <ticket>
+.RI [ options ]
+.br
+.B gat delete
+.I <ticket>
+.RI [ options ]
+.SH DESCRIPTION
+Removes a worktree via native Git. Refuses to remove the primary worktree, a
+locked worktree (without
+.BR \-\-force ),
+or a dirty worktree (without
+.BR \-\-force ).
+Optionally deletes the branch afterward. Cleans up the worktree's usage metadata
+entry. By default prompts for confirmation.
+.SH OPTIONS
+.TP
+.BR \-f ", " \-\-force
+Remove a dirty or locked worktree.
+.TP
+.BR \-y ", " \-\-yes
+Skip the confirmation prompt.
+.TP
+.B \-\-delete\-branch
+Delete the branch after removal (must be merged).
+.TP
+.B \-\-force\-delete\-branch
+Force-delete the branch (implies
+.BR \-\-delete\-branch ).
+.TP
+.BR \-n ", " \-\-dry\-run
+Show the planned removal only.
+.TP
+.BI \-\-prefix " prefix" ", " \-\-no\-prefix
+Ticket prefix handling.
+.TP
+.BI \-\-format " text|json"
+Output format.
+.SH EXAMPLES
+.RS
+.EX
+gat rm 12345
+gat rm 12345 \-\-yes \-\-delete\-branch
+gat rm 12345 \-\-force \-\-yes
+gat delete 12345 \-\-dry\-run
+.EE
+.RE
+.SH "SEE ALSO"
+.BR gat (1),
+.BR gat\-archive (1),
+.BR gat\-merge (1)

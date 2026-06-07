@@ -1,0 +1,57 @@
+.TH GAT-LIST 1 "2026-06-04" "gat 0.3.0" "gat Manual"
+.SH NAME
+gat-list \- list registered worktrees with status and change stats
+.SH SYNOPSIS
+.B gat list
+.RB [ \-\-format
+.IR text|json ]
+.RB [ \-\-fast ]
+.br
+.B gat ls
+.RI [ ... ]
+.SH DESCRIPTION
+Shows every worktree with its branch, state
+.RI ( primary / detached / dirty / merged / locked / missing ),
+short HEAD, a change summary, idle time, and description. In full mode it
+computes per-worktree status in parallel across worker threads. The
+.I @
+marker indicates the current worktree.
+.PP
+The
+.I Changes
+column is rendered as
+.IR <files>f " " +<insertions> " " \-<deletions> ,
+where files counts staged, unstaged, and untracked paths, and
+insertions/deletions come from
+.BR "git diff \-\-shortstat HEAD" .
+The
+.I Idle
+column shows days since the worktree was last accessed, falling back to
+filesystem modification time when no usage is tracked.
+.SH OPTIONS
+.TP
+.B \-\-fast
+Skip per-worktree dirty/merged/diff checks for instant output.
+.TP
+.B \-\-watch
+Continuously re-render (delegates to
+.BR gat\-watch (1)).
+.TP
+.BI \-\-format " text|json"
+Output format.
+.SH "JSON FIELDS"
+.IR path ", " branch ", " head ", " primary ", " detached ", " dirty ", " merged ", "
+.IR changed_files ", " insertions ", " deletions ", " locked ", " prunable ", "
+.IR idle_days ", " description .
+.SH EXAMPLES
+.RS
+.EX
+gat list
+gat ls \-\-fast
+gat list \-\-json | jq '.[] | select(.dirty)'
+.EE
+.RE
+.SH "SEE ALSO"
+.BR gat (1),
+.BR gat\-watch (1),
+.BR gat\-search (1)

@@ -1,0 +1,43 @@
+.TH GAT-SHELL-INIT 1 "2026-06-04" "gat 0.3.0" "gat Manual"
+.SH NAME
+gat-shell-init \- emit shell integration code
+.SH SYNOPSIS
+.B gat shell\-init
+.RB [ \-\-shell
+.IR bash|zsh|fish ]
+.SH DESCRIPTION
+Prints a shell function that wraps
+.B gat
+so commands which resolve a path
+.RB ( new ,
+.BR go ,
+.BR search )
+can change the parent shell's directory. A child process cannot
+.B cd
+its parent, so the wrapper evaluates structured shell output. Add the output to
+your shell rc file.
+.SH OPTIONS
+.TP
+.BI \-\-shell " bash|zsh|fish"
+Shell dialect (default
+.IR bash ).
+.SH EXAMPLES
+For bash or zsh, add to the rc file:
+.PP
+.RS
+.EX
+eval "$(gat shell\-init \-\-shell bash)"
+.EE
+.RE
+.PP
+For fish, add to
+.IR config.fish :
+.PP
+.RS
+.EX
+gat shell\-init \-\-shell fish | source
+.EE
+.RE
+.SH "SEE ALSO"
+.BR gat (1),
+.BR gat\-doctor (1)

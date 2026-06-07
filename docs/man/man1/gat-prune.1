@@ -1,0 +1,52 @@
+.TH GAT-PRUNE 1 "2026-06-04" "gat 0.3.0" "gat Manual"
+.SH NAME
+gat-prune \- prune stale or merged worktrees
+.SH SYNOPSIS
+.B gat prune
+.RB [ \-\-merged ]
+.RB [ \-\-older\-than
+.IR days ]
+.RI [ options ]
+.SH DESCRIPTION
+Always runs
+.B git worktree prune
+to clear stale administrative metadata. With
+.BR \-\-merged ,
+additionally removes clean worktrees whose branches are merged into the default
+branch. With
+.BR \-\-older\-than " " <days> ,
+removes worktrees not accessed in that many days (skipping dirty ones unless
+.BR \-\-force ).
+Both selectors can be combined.
+.SH OPTIONS
+.TP
+.B \-\-merged
+Remove merged, clean worktrees.
+.TP
+.BI \-\-older\-than " days"
+Remove worktrees unused for N days.
+.TP
+.BR \-f ", " \-\-force
+Include dirty worktrees when pruning by age.
+.TP
+.BR \-y ", " \-\-yes
+Skip confirmation prompts.
+.TP
+.BR \-n ", " \-\-dry\-run
+Show planned pruning only.
+.TP
+.BI \-\-format " text|json"
+Output format.
+.SH EXAMPLES
+.RS
+.EX
+gat prune
+gat prune \-\-merged \-\-yes
+gat prune \-\-older\-than 30 \-\-dry\-run
+gat prune \-\-merged \-\-older\-than 60 \-\-yes
+.EE
+.RE
+.SH "SEE ALSO"
+.BR gat (1),
+.BR gat\-rm (1),
+.BR gat\-doctor (1)

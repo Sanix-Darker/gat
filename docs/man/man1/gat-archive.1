@@ -1,0 +1,48 @@
+.TH GAT-ARCHIVE 1 "2026-06-04" "gat 0.3.0" "gat Manual"
+.SH NAME
+gat-archive \- move a worktree to an archive directory
+.SH SYNOPSIS
+.B gat archive
+.I <ticket>
+.RI [ options ]
+.SH DESCRIPTION
+Relocates a worktree (preserving it as a valid Git worktree) into an archive
+root, by default
+.IR ../<repo\-name>\-archive/ ,
+using
+.BR "git worktree move" .
+Refuses to archive the primary worktree, and refuses a dirty worktree without
+.BR \-\-force .
+Validates that the archive destination is writable, and updates the usage
+metadata to the new path.
+.SH OPTIONS
+.TP
+.BI \-\-archive\-dir " path"
+Archive root (default
+.IR ../<repo>\-archive ).
+.TP
+.BR \-f ", " \-\-force
+Archive a dirty worktree.
+.TP
+.BR \-y ", " \-\-yes
+Skip the confirmation prompt.
+.TP
+.BR \-n ", " \-\-dry\-run
+Show the planned archive move only.
+.TP
+.BI \-\-prefix " prefix" ", " \-\-no\-prefix
+Ticket prefix handling.
+.TP
+.BI \-\-format " text|json"
+Output format.
+.SH EXAMPLES
+.RS
+.EX
+gat archive 12345
+gat archive 12345 \-\-yes \-\-archive\-dir ~/archives
+gat archive 12345 \-\-dry\-run
+.EE
+.RE
+.SH "SEE ALSO"
+.BR gat (1),
+.BR gat\-rm (1)

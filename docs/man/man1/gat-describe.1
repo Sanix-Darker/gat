@@ -1,0 +1,41 @@
+.TH GAT-DESCRIBE 1 "2026-06-04" "gat 0.3.0" "gat Manual"
+.SH NAME
+gat-describe \- set or show a worktree description
+.SH SYNOPSIS
+.B gat describe
+.I <ticket>
+.RI [ text ...]
+.RB [ \-\-clear ]
+.br
+.B gat desc
+.I <ticket>
+.RI [ text ...]
+.SH DESCRIPTION
+With no text, prints the current description. With trailing words, joins them
+into a single description and stores it.
+.B \-\-clear
+removes the description. The target worktree must exist. Descriptions appear in
+.BR gat\-list (1)
+and are folded into tmux session names.
+.SH OPTIONS
+.TP
+.B \-\-clear
+Remove the description.
+.TP
+.BI \-\-prefix " prefix" ", " \-\-no\-prefix
+Ticket prefix handling.
+.TP
+.BI \-\-format " text|json"
+Output format.
+.SH EXAMPLES
+.RS
+.EX
+gat describe 12345 fix the login redirect bug
+gat describe 12345
+gat describe 12345 \-\-clear
+.EE
+.RE
+.SH "SEE ALSO"
+.BR gat (1),
+.BR gat\-list (1),
+.BR gat\-new (1)

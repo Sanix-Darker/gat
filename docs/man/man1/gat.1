@@ -1,0 +1,183 @@
+.TH GAT 1 "2026-06-04" "gat 0.3.0" "gat Manual"
+.SH NAME
+gat \- ticket-oriented Git worktree workflow helper
+.SH SYNOPSIS
+.B gat
+.I <ticket>
+.RI [ options ]
+.br
+.B gat
+.I <command>
+.RI [ args ]
+.RI [ options ]
+.SH DESCRIPTION
+.B gat
+layers a fast, opinionated command surface over native
+.BR git\-worktree (1),
+.BR tmux (1),
+.BR fzf (1),
+Docker Compose, and shell integration, while keeping Git as the single source
+of truth. It is built around tickets: short identifiers (often bare numbers
+that are automatically prefixed, for example
+.I 12345
+becomes
+.IR TICKET\-12345 )
+that name a branch and a sibling worktree.
+.PP
+Running
+.B gat
+with a bare ticket is shorthand for
+.BR "gat new" .
+.SH COMMANDS
+.TP
+.B new
+Create or reuse a ticket worktree. Aliases:
+.BR add .
+See
+.BR gat\-new (1).
+.TP
+.B go
+Print or switch to an existing worktree. See
+.BR gat\-go (1).
+.TP
+.B switch
+Attach to (or open) the worktree's tmux session. See
+.BR gat\-switch (1).
+.TP
+.B describe
+Set or show a worktree description. Alias:
+.BR desc .
+See
+.BR gat\-describe (1).
+.TP
+.B sessions
+List live gat tmux sessions. See
+.BR gat\-sessions (1).
+.TP
+.B ui
+Interactive TUI dashboard. Alias:
+.BR dashboard .
+See
+.BR gat\-ui (1).
+.TP
+.B config
+Inspect or edit configuration. See
+.BR gat\-config (1).
+.TP
+.B merge
+Merge a ticket branch into the default branch and clean up. See
+.BR gat\-merge (1).
+.TP
+.B path
+Print only a worktree path. See
+.BR gat\-path (1).
+.TP
+.B list
+List registered worktrees. Alias:
+.BR ls .
+See
+.BR gat\-list (1).
+.TP
+.B watch
+Continuously render the worktree list. See
+.BR gat\-watch (1).
+.TP
+.B search
+Search worktrees, optionally with fzf. Alias:
+.BR find .
+See
+.BR gat\-search (1).
+.TP
+.B tmux
+Create a worktree and open a tmux session. Aliases:
+.BR session ,
+.BR start .
+See
+.BR gat\-tmux (1).
+.TP
+.B dx
+Enter or run a worktree Docker container. Alias:
+.BR docker .
+See
+.BR gat\-dx (1).
+.TP
+.B rm
+Remove a worktree. Aliases:
+.BR remove ,
+.BR delete .
+See
+.BR gat\-rm (1).
+.TP
+.B archive
+Move a worktree to the archive directory. See
+.BR gat\-archive (1).
+.TP
+.B prune
+Prune stale or merged worktrees. See
+.BR gat\-prune (1).
+.TP
+.B shell\-init
+Emit shell integration code. See
+.BR gat\-shell\-init (1).
+.TP
+.B doctor
+Inspect local setup. See
+.BR gat\-doctor (1).
+.SH "GLOBAL OPTIONS"
+.TP
+.BR \-h ", " \-\-help
+Print the global usage summary.
+.TP
+.BR \-V ", " \-\-version
+Print the program version.
+.TP
+.BR \-\-format " " \fItext|json|shell\fR
+Select the output format for commands that support it.
+.SH "EXIT STATUS"
+.TP
+.B 0
+Success.
+.TP
+.B 1
+A runtime or Git failure (for example a refused unsafe operation).
+.TP
+.B 2
+A CLI usage error (unknown option or missing argument).
+.SH ENVIRONMENT
+.TP
+.B GAT_TICKET_PREFIX
+Default prefix for numeric tickets (default
+.IR TICKET ).
+.TP
+.B GAT_TMUX_LAYOUT
+Layout preset:
+.IR classic ", " ai\-focus ", " editor\-focus ", " wide .
+.TP
+.B GAT_QUIET
+Suppress progress lines on stderr.
+.TP
+.B GAT_VERBOSE ", " RUST_LOG
+Enable logging.
+.TP
+.B XDG_CONFIG_HOME
+Overrides the config root
+.RI ( $XDG_CONFIG_HOME/gat ).
+.PP
+See
+.BR gat\-config (1)
+for the full list of configuration sources and keys.
+.SH FILES
+.TP
+.I ${XDG_CONFIG_HOME:-~/.config}/gat/config.toml
+The configuration file.
+.TP
+.I <repo>/.git/gat-metadata.json
+Per-repository worktree usage metadata.
+.SH "SEE ALSO"
+.BR git\-worktree (1),
+.BR tmux (1),
+.BR fzf (1)
+.PP
+Full reference:
+.I docs/COMMANDS.md
+in the source tree.

@@ -1,0 +1,63 @@
+.TH GAT-SWITCH 1 "2026-06-04" "gat 0.3.0" "gat Manual"
+.SH NAME
+gat-switch \- attach to or open the worktree's tmux session
+.SH SYNOPSIS
+.B gat switch
+.I <ticket>
+.RI [ options ]
+.SH DESCRIPTION
+Resolves what to do in order: if a tmux session for the ticket is already
+running, attach to it (or switch the client when already inside tmux);
+otherwise, if the worktree exists, build the gat tmux layout and attach;
+otherwise, fail with a message telling you to create the worktree first.
+.PP
+Unlike
+.BR gat\-tmux (1),
+.B switch
+never creates a worktree. The session name folds in the worktree description
+(truncated to 100 characters), and gat records
+.IR @gat_path ", " @gat_branch ", and " @gat_description
+options on the session.
+.SH OPTIONS
+.TP
+.BI \-\-session " name"
+Override the tmux session name.
+.TP
+.BI \-\-prompt\-file " path"
+Prompt draft path used when creating panes.
+.TP
+.BI \-\-codex\-cmd " cmd"
+Command for the AI pane (default
+.IR codex ).
+.TP
+.BI \-\-editor\-cmd " cmd"
+Editor for the prompt pane (default
+.IR nvim ).
+.TP
+.BI \-\-layout " preset"
+Layout preset:
+.IR classic ", " ai\-focus ", " editor\-focus ", " wide .
+.TP
+.B \-\-no\-attach
+Ensure the session exists without attaching.
+.TP
+.BR \-n ", " \-\-dry\-run
+Print the planned action only.
+.TP
+.BI \-\-prefix " prefix" ", " \-\-no\-prefix
+Ticket prefix handling.
+.TP
+.BI \-\-format " text|json|shell"
+Output format.
+.SH EXAMPLES
+.RS
+.EX
+gat switch 12345
+gat switch 12345 \-\-dry\-run \-\-json
+gat switch 12345 \-\-layout ai\-focus \-\-no\-attach
+.EE
+.RE
+.SH "SEE ALSO"
+.BR gat (1),
+.BR gat\-sessions (1),
+.BR gat\-tmux (1)

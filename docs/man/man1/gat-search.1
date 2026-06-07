@@ -1,0 +1,60 @@
+.TH GAT-SEARCH 1 "2026-06-04" "gat 0.3.0" "gat Manual"
+.SH NAME
+gat-search \- search worktrees, optionally through fzf
+.SH SYNOPSIS
+.B gat search
+.RI [ query ]
+.RI [ options ]
+.br
+.B gat find
+.RI [ query ]
+.RI [ options ]
+.SH DESCRIPTION
+Builds a stable, tab-separated feed of
+.IR branch <TAB> state <TAB> path .
+By default it pipes the feed through
+.BR fzf (1)
+for interactive selection; the selected worktree can be switched to (with shell
+integration), printed, or opened in tmux. With
+.B \-\-print
+or
+.B \-\-no\-fzf
+it emits the raw feed for use with
+.BR awk (1),
+.BR grep (1),
+or other tools.
+.SH OPTIONS
+.TP
+.B \-\-print
+Print the tab-separated feed instead of invoking fzf.
+.TP
+.B \-\-path
+Print only the selected path.
+.TP
+.B \-\-tmux
+Open the selected worktree's tmux session.
+.TP
+.B \-\-no\-fzf
+Do not invoke fzf; print the feed.
+.TP
+.B \-\-full
+Include dirty/merged checks in the feed.
+.TP
+.B \-\-fast
+Skip expensive checks (default).
+.TP
+.BI \-\-format " text|json|shell"
+Output format for the selected item.
+.SH EXAMPLES
+.RS
+.EX
+gat search
+gat search login
+gat search \-\-print | awk \-F '\\t' '$2 ~ /dirty/ { print $1 }'
+gat search \-\-tmux
+.EE
+.RE
+.SH "SEE ALSO"
+.BR gat (1),
+.BR gat\-list (1),
+.BR gat\-switch (1)

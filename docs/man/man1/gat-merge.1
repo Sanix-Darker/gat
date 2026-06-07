@@ -1,0 +1,65 @@
+.TH GAT-MERGE 1 "2026-06-04" "gat 0.3.0" "gat Manual"
+.SH NAME
+gat-merge \- merge a ticket branch into the default branch and clean up
+.SH SYNOPSIS
+.B gat merge
+.I <ticket>
+.RI [ options ]
+.SH DESCRIPTION
+Runs the merge in the primary worktree with strict safety checks, then
+optionally removes the worktree, deletes the branch, and kills the tmux
+session.
+.PP
+Safety guarantees: the target worktree must exist, be non-primary, and be clean;
+the branch cannot be the base branch; the primary worktree must be clean and
+already have the base branch checked out (gat refuses rather than switching
+branches for you); and a merge conflict is aborted with
+.B git merge \-\-abort
+so the repository is left unchanged. Cleanup steps only run after a successful
+merge. If the branch is already merged, the merge step is skipped but cleanup
+still runs.
+.SH OPTIONS
+.TP
+.BI \-\-into " branch"
+Merge into this branch (default: repository default branch).
+.TP
+.B \-\-no\-ff
+Always create a merge commit.
+.TP
+.BR \-\-remove ", " \-\-rm
+Remove the worktree after a successful merge.
+.TP
+.B \-\-delete\-branch
+Remove the worktree and delete the merged branch.
+.TP
+.B \-\-kill\-session
+Kill the worktree's tmux session after the merge.
+.TP
+.B \-\-cleanup
+Shorthand for
+.BR \-\-remove " " \-\-delete\-branch " " \-\-kill\-session .
+.TP
+.BR \-y ", " \-\-yes
+Skip the confirmation prompt.
+.TP
+.BR \-n ", " \-\-dry\-run
+Print the planned merge/cleanup only.
+.TP
+.BI \-\-prefix " prefix" ", " \-\-no\-prefix
+Ticket prefix handling.
+.TP
+.BI \-\-format " text|json|shell"
+Output format.
+.SH EXAMPLES
+.RS
+.EX
+gat merge 12345
+gat merge 12345 \-\-cleanup \-\-yes
+gat merge 12345 \-\-into develop \-\-no\-ff
+gat merge 12345 \-\-dry\-run \-\-json
+.EE
+.RE
+.SH "SEE ALSO"
+.BR gat (1),
+.BR gat\-prune (1),
+.BR gat\-rm (1)

@@ -1,0 +1,100 @@
+.TH GAT-NEW 1 "2026-06-04" "gat 0.3.0" "gat Manual"
+.SH NAME
+gat-new \- create or reuse a ticket worktree
+.SH SYNOPSIS
+.B gat
+.I <ticket>
+.RI [ options ]
+.br
+.B gat new
+.I <ticket>
+.RI [ options ]
+.br
+.B gat add
+.I <ticket>
+.RI [ options ]
+.SH DESCRIPTION
+Creates a sibling worktree next to the primary checkout. For a repository at
+.I /repos/project
+and ticket
+.IR TICKET\-12345 ,
+the default worktree path is
+.IR /repos/project\-TICKET\-12345 .
+If a worktree for the branch already exists, the command is idempotent and
+reports the existing worktree instead of creating a new one.
+.PP
+On creation, gat resolves the ticket name, picks a base ref (the resolved
+.B \-\-base
+or the repository default branch), creates the branch if needed, adds the
+worktree, records a creation timestamp, applies a setup template if configured,
+and stores a description if given. With shell integration active, it also
+changes into the new worktree.
+.SH OPTIONS
+.TP
+.BI \-\-prefix " prefix"
+Prefix for numeric tickets (default
+.IR TICKET ).
+.TP
+.B \-\-no\-prefix
+Do not prefix a numeric ticket.
+.TP
+.BI \-\-branch " branch"
+Use this branch name instead of the ticket name.
+.TP
+.BI \-\-base ", " \-\-from " ref"
+Base ref for a new branch. Accepts
+.I ^
+(default branch) and
+.I @
+(current branch).
+.TP
+.BI \-\-path " path"
+Override the computed worktree path.
+.TP
+.B \-\-detach
+Create a detached worktree (no branch) for investigation.
+.TP
+.BI \-d ", " \-\-description " text"
+Attach a description to the worktree.
+.TP
+.BI \-t ", " \-\-template " name"
+Apply a named setup template after creation.
+.TP
+.B \-\-no\-template
+Skip templating even if a
+.I default
+template exists.
+.TP
+.BR \-n ", " \-\-dry\-run
+Print the planned action without changing anything.
+.TP
+.BI \-\-format " text|json|shell"
+Output format.
+.SH EXAMPLES
+Create and switch into TICKET\-12345:
+.PP
+.RS
+.EX
+gat 12345
+.EE
+.RE
+.PP
+Custom prefix and base branch:
+.PP
+.RS
+.EX
+gat 4567 \-\-prefix ABC \-\-base develop
+.EE
+.RE
+.PP
+Explicit branch name with a description:
+.PP
+.RS
+.EX
+gat new login\-fix \-\-branch feature/login \-\-description "fix login redirect"
+.EE
+.RE
+.SH "SEE ALSO"
+.BR gat (1),
+.BR gat\-go (1),
+.BR gat\-tmux (1)

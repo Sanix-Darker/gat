@@ -1,0 +1,36 @@
+.TH GAT-SESSIONS 1 "2026-06-04" "gat 0.3.0" "gat Manual"
+.SH NAME
+gat-sessions \- list live gat tmux sessions
+.SH SYNOPSIS
+.B gat sessions
+.RB [ \-\-format
+.IR text|json ]
+.SH DESCRIPTION
+Enumerates tmux sessions whose names start with
+.I gat\-
+and reports each one's attach state, window count, branch, path, and
+description, read from the
+.I @gat_*
+options gat sets when it creates a session. Sessions created outside gat are not
+listed. When no tmux server is running, prints a friendly message and exits
+successfully. Requires
+.BR tmux (1)
+on
+.IR PATH .
+.SH OPTIONS
+.TP
+.BI \-\-format " text|json"
+Output format.
+.SH "OUTPUT COLUMNS (TEXT)"
+.IR Session ", " A " (attached marker), " Win " (window count), " Branch ", and " "Description / Path" .
+.SH EXAMPLES
+.RS
+.EX
+gat sessions
+gat sessions \-\-json | jq '.[] | select(.attached)'
+.EE
+.RE
+.SH "SEE ALSO"
+.BR gat (1),
+.BR gat\-switch (1),
+.BR gat\-tmux (1)
